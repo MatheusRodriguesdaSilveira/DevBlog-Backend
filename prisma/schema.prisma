@@ -1,0 +1,82 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String     @id @default(uuid())
+  email              String     @unique
+  name               String?
+  descriptionProfile String?
+  blogProfile        String?
+  linkedinProfile    String?
+  password           String
+  profilePicture     String? // Caminho para a foto do perfil
+  posts              Post[] // Relacionamento com as postagens
+  followers          Follower[] @relation("UserFollowers") // Relacionamento de seguidores
+  following          Follower[] @relation("UserFollowing") // Relacionamento de pessoas que segue
+  comments           Comment[] // Relacionamento com comentários
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  likes              Like[] // Curtidas do usuário
+
+  @@map("users")
+}
+
+model Post {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  imageUrl    String // Caminho para a imagem postada
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String // Chave estrangeira do usuário que postou
+  user        User      @relation(fields: [userId], references: [id])
+  likes       Like[] // Curtidas nesta postagem
+  comments    Comment[] // Comentários nesta postagem
+
+  @@map("posts")
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    String // Chave estrangeira do usuário que curtiu
+  postId    String // Chave estrangeira da postagem
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId]) // Garantir que um usuário não curta a mesma postagem mais de uma vez
+  @@map("likes")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String // Conteúdo do comentário
+  userId    String // Chave estrangeira do usuário que comentou
+  postId    String // Chave estrangeira da postagem
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, postId]) // Garantir que um usuário não comente na mesma postagem mais de uma vez
+  @@map("comments")
+}
+
+model Follower {
+  id         Int      @id @default(autoincrement())
+  followerId String // Chave estrangeira do usuário que está seguindo
+  followedId String // Chave estrangeira do usuário que está sendo seguido
+  follower   User     @relation("UserFollowers", fields: [followerId], references: [id])
+  followed   User     @relation("UserFollowing", fields: [followedId], references: [id])
+  createdAt  DateTime @default(now())
+
+  @@unique([followerId, followedId]) // Garantir que um usuário possa seguir outro apenas uma vez
+  @@map("followers")
+}
