@@ -6,7 +6,7 @@
     "dev": "ts-node-dev src/server.ts",
     "build": "tsc --build",
     "start": "node dist/server.js",
-    "vercel-build": "prisma generate && prisma migrate deploy",
+    "vercel-build": "prisma generate && prisma migrate deploy && npm run build",
     "prisma:generate": "prisma generate"
   },
   "keywords": [],
