@@ -13,7 +13,7 @@ app.use(fileUpload({
 }))
 app.use(router);
 
-app.use('/user_profiles',  express.static(path.resolve(__dirname, "..", "user_profiles")));
+// app.use('/user_profiles',  express.static(path.resolve(__dirname, "..", "user_profiles")));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   try {

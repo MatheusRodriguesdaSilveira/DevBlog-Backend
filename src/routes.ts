@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import { CreateUserController } from './controllers/user/CreateUserController';
 import { AuthUserController } from './controllers/user/AuthUserController';
 import { InfoUserController } from './controllers/user/InfoUserController';
@@ -8,14 +8,10 @@ import { UserController } from './controllers/user/GetAllUsersController';
 import { GetAllPostsController } from './controllers/post/GetAllPostController';
 
 import { isAuthenticated } from './middlewares/isAuthticated';
-import multer from 'multer';
-import uploadConfig from './config/multer';
 import { DeletePostController } from './controllers/post/DeletePostController';
 import { EditPostController } from './controllers/post/EditPostController';
 
 const router = Router();
-
-const upload = multer(uploadConfig.upload("./user_profile"));
 
 router.post('/users', new CreateUserController().handle as any);
 router.post('/login', new AuthUserController().handle as any);
