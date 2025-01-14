@@ -17,14 +17,22 @@ app.use(router);
 app.use('/user_profiles',  express.static(path.resolve(__dirname, "..", "user_profiles")));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof Error) {
-    return (res as any).status(400).json({ error: err.message });
+  try {
+    
+    if (err instanceof Error) {
+      return (res as any).status(400).json({ error: err.message });
+    }
+  } catch (error) {
+
+    console.log(error)
+    return res.status(500).json({
+      status: 'error',
+      message: 'Internal server error',
+    });
   }
 
-  return res.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
-  });
+
+
 });
 
 app.listen(process.env.PORT, () => console.log(`Server Online!!! Port: ${process.env.PORT}`));
