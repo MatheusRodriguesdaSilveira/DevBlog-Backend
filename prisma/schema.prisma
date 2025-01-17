@@ -65,7 +65,6 @@ model Comment {
   post      Post     @relation(fields: [postId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, postId]) // Garantir que um usuário não comente na mesma postagem mais de uma vez
   @@map("comments")
 }
 

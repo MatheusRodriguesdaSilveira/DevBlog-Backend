@@ -16,7 +16,7 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     }
 
     // Extrai o token do cabeçalho Authorization
-    const [, token] = authToken.split(" ");
+    const [, token] = authToken.split(" ")
 
     try {
         // Valida o token

@@ -10,6 +10,7 @@ import { GetAllPostsController } from './controllers/post/GetAllPostController';
 import { isAuthenticated } from './middlewares/isAuthticated';
 import { DeletePostController } from './controllers/post/DeletePostController';
 import { EditPostController } from './controllers/post/EditPostController';
+import { CommentPostController } from './controllers/post/CommentPostController';
 
 const router = Router();
 
@@ -26,4 +27,5 @@ router.get('/posts', isAuthenticated, new GetAllPostsController().handle as any)
 router.delete('/post/:post_id', isAuthenticated, new DeletePostController().handle as any);
 router.put('/edit/:post_id', isAuthenticated, new EditPostController().handle as any);
 
+router.post('/comment/:post_id', isAuthenticated, new CommentPostController().handle as any);
 export { router };

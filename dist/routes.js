@@ -12,6 +12,7 @@ const GetAllPostController_1 = require("./controllers/post/GetAllPostController"
 const isAuthticated_1 = require("./middlewares/isAuthticated");
 const DeletePostController_1 = require("./controllers/post/DeletePostController");
 const EditPostController_1 = require("./controllers/post/EditPostController");
+const CommentPostController_1 = require("./controllers/post/CommentPostController");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.post('/users', new CreateUserController_1.CreateUserController().handle);
@@ -23,3 +24,4 @@ router.post('/post', isAuthticated_1.isAuthenticated, new CreatePostController_1
 router.get('/posts', isAuthticated_1.isAuthenticated, new GetAllPostController_1.GetAllPostsController().handle);
 router.delete('/post/:post_id', isAuthticated_1.isAuthenticated, new DeletePostController_1.DeletePostController().handle);
 router.put('/edit/:post_id', isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
+router.post('/comment/:post_id', isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);

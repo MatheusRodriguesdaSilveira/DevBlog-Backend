@@ -11,6 +11,24 @@ class GetAllPostsService {
         imageUrl: true,
         createdAt: true,
         updatedAt: true,
+        comments: {
+          select: {
+            user: {
+              select: {
+                name: true,
+                profilePicture: true,
+              }
+            },
+            id: true,
+            content: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          }
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
       }
     });
 

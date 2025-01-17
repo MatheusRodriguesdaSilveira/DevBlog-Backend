@@ -16,7 +16,17 @@ class InfoUserService {
                 blogProfile: true,
                 linkedinProfile: true,
                 profilePicture: true,
-                posts: true
+                posts: {
+                    select: {
+                        comments: true,
+                        id: true,
+                        title: true,
+                        description: true,
+                        imageUrl: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    }
+                },
             }
         });
         return user;
