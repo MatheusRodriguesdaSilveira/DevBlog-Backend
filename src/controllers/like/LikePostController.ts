@@ -7,7 +7,7 @@ async handle(req: Request, res: Response) {
   const { userId } = req.body;
 
   if (!post_id || !userId) {
-    return res.status(400).json({ error: "Par metros inv lidos: post_id, userId" });
+    return res.status(400).json({ error: "Parametros invalidos: post_id, userId" });
   }
 
   try {
