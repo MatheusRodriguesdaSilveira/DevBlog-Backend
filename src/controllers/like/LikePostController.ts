@@ -30,7 +30,7 @@ async handle(req: Request, res: Response) {
   async getLikesByUserId(req: Request, res: Response) {
     const { userId } = req.params;
     const likeService = new LikeService();
-    const likes = await likeService.getLikesByUserId(userId);
+    const likes = await likeService.getLikeIdsByUser(userId);
     return res.json(likes);
   }
 

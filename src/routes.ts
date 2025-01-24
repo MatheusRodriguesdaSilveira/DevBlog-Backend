@@ -34,7 +34,7 @@ router.post('/comment/:post_id', isAuthenticated, new CommentPostController().ha
 const likeController = new LikeController();
 router.post('/like/:post_id', isAuthenticated, likeController.handle as any);
 router.get('/likes/:post_id', isAuthenticated, likeController.getLikesByPostId as any);
-router.get('/likes/user/:userId', isAuthenticated, likeController.getLikesByUserId as any);
+router.get('/likes/:user_id', isAuthenticated, likeController.getLikesByUserId as any);
 router.delete('/like/:id', isAuthenticated, likeController.deleteLike as any);
 
 router.get('/like', new LikeControllerTeste().handle as any);

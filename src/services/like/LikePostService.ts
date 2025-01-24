@@ -77,14 +77,31 @@ class LikeService {
     return likes;
   }
 
-  async getLikesByUserId(userId: string) {
-    const likes = await prismaClient.like.findMany({
+async getLikeIdsByUser(userId: string) {
+  try {
+    const user = await prismaClient.user.findUnique({
       where: {
-        userId,
+        id: userId
       }
     });
-    return likes;
+    if (user) {
+      const likes = await prismaClient.like.findMany({
+        where: {
+          userId: userId, // Filtra pelo ID do usuário
+        },
+        include: {
+          post: true, // Inclui detalhes da postagem curtida
+        },
+      });
+      return likes;
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
+}
 
   async deleteLike(id: number) {
     await prismaClient.like.delete({
