@@ -13,6 +13,18 @@ class GetAllPostsService {
                 imageUrl: true,
                 createdAt: true,
                 updatedAt: true,
+                likes: {
+                    select: {
+                        id: true,
+                        postId: true,
+                        userId: true,
+                        post: {
+                            select: {
+                                title: true,
+                            }
+                        },
+                    },
+                },
                 comments: {
                     select: {
                         user: {

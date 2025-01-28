@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePostService = void 0;
-// backend/src/services/post/CreatePostService.ts
 const prisma_1 = require("../../prisma");
 class CreatePostService {
     async execute({ title, description, imageUrl, userId }) {

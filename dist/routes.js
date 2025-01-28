@@ -13,6 +13,7 @@ const isAuthticated_1 = require("./middlewares/isAuthticated");
 const DeletePostController_1 = require("./controllers/post/DeletePostController");
 const EditPostController_1 = require("./controllers/post/EditPostController");
 const CommentPostController_1 = require("./controllers/post/CommentPostController");
+const LikePostController_1 = require("./controllers/like/LikePostController");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.post('/users', new CreateUserController_1.CreateUserController().handle);
@@ -25,3 +26,8 @@ router.get('/posts', isAuthticated_1.isAuthenticated, new GetAllPostController_1
 router.delete('/post/:post_id', isAuthticated_1.isAuthenticated, new DeletePostController_1.DeletePostController().handle);
 router.put('/edit/:post_id', isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
 router.post('/comment/:post_id', isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);
+const likeController = new LikePostController_1.LikePostController();
+router.post('/like/:post_id', isAuthticated_1.isAuthenticated, likeController.handle);
+router.get('/likes/:post_id', isAuthticated_1.isAuthenticated, likeController.getLikesByPostId);
+router.get('/likes/:user_id', isAuthticated_1.isAuthenticated, likeController.getLikesByUserId);
+router.delete('/like/:id', isAuthticated_1.isAuthenticated, likeController.deleteLike);

@@ -18,13 +18,27 @@ class InfoUserService {
                 profilePicture: true,
                 posts: {
                     select: {
-                        comments: true,
                         id: true,
                         title: true,
                         description: true,
                         imageUrl: true,
+                        comments: {
+                            select: {
+                                content: true,
+                                user: {
+                                    select: {
+                                        name: true,
+                                        profilePicture: true,
+                                    }
+                                },
+                            },
+                        },
+                        likes: true,
                         createdAt: true,
                         updatedAt: true,
+                    },
+                    orderBy: {
+                        createdAt: 'desc',
                     }
                 },
             }

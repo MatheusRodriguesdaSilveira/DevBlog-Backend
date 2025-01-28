@@ -1,4 +1,3 @@
-// backend/src/services/post/CreatePostService.ts
 import { prismaClient } from "../../prisma";
 
 interface PostRequest{

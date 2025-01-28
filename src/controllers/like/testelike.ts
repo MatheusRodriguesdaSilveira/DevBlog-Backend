@@ -1,11 +1,25 @@
+import { LikePostService } from "../../services/like/testelike";
 import { Request, Response } from "express";
-import { LikeServiceteste } from "../../services/like/testelike";
 
-class LikeControllerTeste {
-    async handle(req: Request, res: Response) {
-        const teste = new LikeServiceteste();
-        const result = await teste.execute();
-        return res.json(result); // Agora, sem erros
+class LikePostController {
+  async handle(req: Request, res: Response) {
+    try {
+      const { post_id } = req.params;
+      const { userId } = req.body
+
+      if (!userId) {
+        return res.status(401).json({ error: "Usuário não autenticado" });
+      }
+
+      const likePostService = new LikePostService();
+      const likePost = await likePostService.execute({ post_id, userId: req.body.userId });
+
+      return res.status(201).json(likePost);
+    } catch (error) {
+      console.error("Erro ao criar like:", error);
+      return res.status(500).json({ error: "Erro ao criar like" });
     }
+  }
 }
-export { LikeControllerTeste };
+
+export { LikePostController };

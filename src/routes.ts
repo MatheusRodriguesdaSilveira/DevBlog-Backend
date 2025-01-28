@@ -11,8 +11,7 @@ import { isAuthenticated } from './middlewares/isAuthticated';
 import { DeletePostController } from './controllers/post/DeletePostController';
 import { EditPostController } from './controllers/post/EditPostController';
 import { CommentPostController } from './controllers/post/CommentPostController';
-import { LikeController } from './controllers/like/LikePostController';
-import { LikeControllerTeste } from './controllers/like/testelike';
+import { LikePostController } from './controllers/like/LikePostController';
 
 const router = Router();
 
@@ -31,11 +30,10 @@ router.put('/edit/:post_id', isAuthenticated, new EditPostController().handle as
 
 router.post('/comment/:post_id', isAuthenticated, new CommentPostController().handle as any);
 
-const likeController = new LikeController();
+const likeController = new LikePostController();
 router.post('/like/:post_id', isAuthenticated, likeController.handle as any);
 router.get('/likes/:post_id', isAuthenticated, likeController.getLikesByPostId as any);
 router.get('/likes/:user_id', isAuthenticated, likeController.getLikesByUserId as any);
 router.delete('/like/:id', isAuthenticated, likeController.deleteLike as any);
 
-router.get('/like', new LikeControllerTeste().handle as any);
 export { router };

@@ -1,24 +1,24 @@
 import { LikeService } from "../../services/like/LikePostService";
 import { Request, Response } from "express";
 
-class LikeController {
-async handle(req: Request, res: Response) {
-  const { post_id } = req.params;
-  const { userId } = req.body;
+class LikePostController {
+  async handle(req: Request, res: Response) {
+    try {
+      const { post_id } = req.params;
+      const { userId } = req.body;
 
-  if (!post_id || !userId) {
-    return res.status(400).json({ error: "Parametros invalidos: post_id, userId" });
-  }
+      if (!post_id || !userId) {
+        return res.status(400).json({ error: "Parametros invalidos: post_id, userId" });
+      }
 
-  try {
-    const likeService = new LikeService();
-    const like = await likeService.execute(post_id, userId);
-    return res.json(like);
-  } catch (error) {
-    console.error("Erro ao criar like:", error);
-    return res.status(500).json({ error: "Erro ao criar like" });
+      const likeService = new LikeService();
+      const like = await likeService.execute({ postId: post_id, userId });
+      return res.json(like);
+    } catch (error) {
+      console.error("Erro ao criar like:", error);
+      return res.status(500).json({ error: "Erro ao criar like" });
+    }
   }
-}
 
   async getLikesByPostId(req: Request, res: Response) {
     const { post_id } = req.params;
@@ -42,4 +42,4 @@ async handle(req: Request, res: Response) {
   }
 }
 
-export { LikeController };
+export { LikePostController };

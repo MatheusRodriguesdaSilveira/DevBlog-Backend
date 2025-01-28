@@ -1,30 +1,34 @@
 import { prismaClient } from "../../prisma";
 
+interface LikeRequest {
+  postId: string;
+  userId: string;
+}
 class LikeService {
-  async execute(postId: string, userId: string) {
+  async execute({ postId, userId }: LikeRequest) {
     try {
       if (!postId || !userId) {
         throw new Error("Post ID e User ID são obrigatórios.");
       }
   
-      const like = await prismaClient.like.findFirst({
-        where: {
-          userId,
-          postId,
-        },
+      const like = await prismaClient.user.findUnique({
+        where: {id: userId,},
       });
       
       if (like) {
         await prismaClient.like.delete({
           where: {
-            id: like.id,
+            userId_postId: {
+              userId,
+              postId,
+            },
           },
           select: {
             id: true,
           },
         });
   
-        return { message: "Like removido", id: like.id };
+        return like;
       }
   
       const newLike = await prismaClient.like.create({
@@ -42,14 +46,7 @@ class LikeService {
       
       console.log("Novo like criado:", newLike);
       
-      return {
-        message: "Like adicionado",
-        id: newLike.id,
-        postId: newLike.postId,
-        userId: newLike.userId,
-        createdAt: newLike.createdAt,
-      };
-      
+      return newLike;
     } catch (error) {
       console.error("Erro no serviço de like:", error);
       throw new Error("Erro ao processar o like.");
