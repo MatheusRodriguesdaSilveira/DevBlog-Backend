@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LikePostController = void 0;
+exports.LikeController = void 0;
 const LikePostService_1 = require("../../services/like/LikePostService");
-class LikePostController {
+class LikeController {
     async handle(req, res) {
+        const { post_id } = req.params;
+        const { userId } = req.body;
+        if (!post_id || !userId) {
+            return res.status(400).json({ error: "Parametros invalidos: post_id, userId" });
+        }
         try {
-            const { post_id } = req.params;
-            const { userId } = req.body;
-            if (!post_id || !userId) {
-                return res.status(400).json({ error: "Parametros invalidos: post_id, userId" });
-            }
             const likeService = new LikePostService_1.LikeService();
-            const like = await likeService.execute({ postId: post_id, userId });
+            const like = await likeService.execute(post_id, userId);
             return res.json(like);
         }
         catch (error) {
@@ -38,4 +38,4 @@ class LikePostController {
         return res.status(204).json();
     }
 }
-exports.LikePostController = LikePostController;
+exports.LikeController = LikeController;

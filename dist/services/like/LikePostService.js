@@ -3,27 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LikeService = void 0;
 const prisma_1 = require("../../prisma");
 class LikeService {
-    async execute({ postId, userId }) {
+    async execute(postId, userId) {
         try {
             if (!postId || !userId) {
                 throw new Error("Post ID e User ID são obrigatórios.");
             }
-            const like = await prisma_1.prismaClient.user.findUnique({
-                where: { id: userId, },
+            const like = await prisma_1.prismaClient.like.findFirst({
+                where: {
+                    userId,
+                    postId,
+                },
             });
             if (like) {
                 await prisma_1.prismaClient.like.delete({
                     where: {
-                        userId_postId: {
-                            userId,
-                            postId,
-                        },
+                        id: like.id,
                     },
                     select: {
                         id: true,
                     },
                 });
-                return like;
+                return { message: "Like removido", id: like.id };
             }
             const newLike = await prisma_1.prismaClient.like.create({
                 data: {
@@ -38,7 +38,13 @@ class LikeService {
                 },
             });
             console.log("Novo like criado:", newLike);
-            return newLike;
+            return {
+                message: "Like adicionado",
+                id: newLike.id,
+                postId: newLike.postId,
+                userId: newLike.userId,
+                createdAt: newLike.createdAt,
+            };
         }
         catch (error) {
             console.error("Erro no serviço de like:", error);

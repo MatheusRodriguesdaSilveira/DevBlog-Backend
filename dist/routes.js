@@ -26,7 +26,7 @@ router.get('/posts', isAuthticated_1.isAuthenticated, new GetAllPostController_1
 router.delete('/post/:post_id', isAuthticated_1.isAuthenticated, new DeletePostController_1.DeletePostController().handle);
 router.put('/edit/:post_id', isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
 router.post('/comment/:post_id', isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);
-const likeController = new LikePostController_1.LikePostController();
+const likeController = new LikePostController_1.LikeController();
 router.post('/like/:post_id', isAuthticated_1.isAuthenticated, likeController.handle);
 router.get('/likes/:post_id', isAuthticated_1.isAuthenticated, likeController.getLikesByPostId);
 router.get('/likes/:user_id', isAuthticated_1.isAuthenticated, likeController.getLikesByUserId);
