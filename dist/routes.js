@@ -14,12 +14,14 @@ const DeletePostController_1 = require("./controllers/post/DeletePostController"
 const EditPostController_1 = require("./controllers/post/EditPostController");
 const CommentPostController_1 = require("./controllers/post/CommentPostController");
 const LikePostController_1 = require("./controllers/like/LikePostController");
+const GetUserByIdController_1 = require("./controllers/user/GetUserByIdController");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.post('/users', new CreateUserController_1.CreateUserController().handle);
 router.post('/login', new AuthUserController_1.AuthUserController().handle);
 router.get('/info', isAuthticated_1.isAuthenticated, new InfoUserController_1.InfoUserController().handle);
 router.get('/profiles', isAuthticated_1.isAuthenticated, new GetAllUsersController_1.UserController().handle);
+router.get('/user/:user_id', isAuthticated_1.isAuthenticated, new GetUserByIdController_1.GetUserByIdController().handle);
 router.put('/edit', isAuthticated_1.isAuthenticated, new EditeUserController_1.UpdateUserController().handle);
 router.post('/post', isAuthticated_1.isAuthenticated, new CreatePostController_1.CreatePostController().handle);
 router.get('/posts', isAuthticated_1.isAuthenticated, new GetAllPostController_1.GetAllPostsController().handle);

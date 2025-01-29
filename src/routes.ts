@@ -12,6 +12,7 @@ import { DeletePostController } from './controllers/post/DeletePostController';
 import { EditPostController } from './controllers/post/EditPostController';
 import { CommentPostController } from './controllers/post/CommentPostController';
 import { LikeController } from './controllers/like/LikePostController';
+import { GetUserByIdController } from './controllers/user/GetUserByIdController';
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.post('/login', new AuthUserController().handle as any);
 
 router.get('/info', isAuthenticated, new InfoUserController().handle as any);
 router.get('/profiles', isAuthenticated, new UserController().handle as any);
+router.get('/user/:user_id', isAuthenticated, new GetUserByIdController().handle as any);
 
 router.put('/edit', isAuthenticated, new UpdateUserController().handle as any);
 
