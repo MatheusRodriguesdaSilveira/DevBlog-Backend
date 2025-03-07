@@ -12,7 +12,7 @@ class CreateUserService {
             where: { email },
         });
         if (userAlreadyExists) {
-            throw new Error("Emai já existente");
+            throw new Error("Email já existente");
         }
         const passwordHash = await (0, bcryptjs_1.hash)(password, 8);
         const user = await prisma_1.prismaClient.user.create({
