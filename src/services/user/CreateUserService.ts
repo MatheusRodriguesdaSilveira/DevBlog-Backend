@@ -18,7 +18,7 @@ class CreateUserService {
         });
 
         if (userAlreadyExists) {
-            throw new Error("Emai já existente")
+            throw new Error("Email já existente")
         }
 
         const passwordHash = await hash(password, 8);
