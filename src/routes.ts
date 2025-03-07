@@ -13,16 +13,25 @@ import { EditPostController } from './controllers/post/EditPostController';
 import { CommentPostController } from './controllers/post/CommentPostController';
 import { LikeController } from './controllers/like/LikePostController';
 import { GetUserByIdController } from './controllers/user/GetUserByIdController';
+import { SendForgotPasswordController } from './controllers/user/SendForgotPasswordController';
+import { ResetPasswordController } from './controllers/user/ResetPasswordController';
 
 const router = Router();
 
+// Auth routes
 router.post('/users', new CreateUserController().handle as any);
 router.post('/login', new AuthUserController().handle as any);
 
+// Password routes
+router.post('/forgot', new SendForgotPasswordController().handle as any);
+router.post('/reset', new ResetPasswordController().handle as any);
+
+// Users routes
 router.get('/info', isAuthenticated, new InfoUserController().handle as any);
 router.get('/profiles', isAuthenticated, new UserController().handle as any);
 router.get('/user/:user_id', isAuthenticated, new GetUserByIdController().handle as any);
 
+// Posts routes
 router.put('/edit', isAuthenticated, new UpdateUserController().handle as any);
 
 router.post('/post', isAuthenticated, new CreatePostController().handle as any);
@@ -32,6 +41,7 @@ router.put('/edit/:post_id', isAuthenticated, new EditPostController().handle as
 
 router.post('/comment/:post_id', isAuthenticated, new CommentPostController().handle as any);
 
+// Like routes
 const likeController = new LikeController();
 router.post('/like/:post_id', isAuthenticated, likeController.handle as any);
 router.get('/likes/:post_id', isAuthenticated, likeController.getLikesByPostId as any);
