@@ -10,8 +10,8 @@ datasource db {
 }
 
 model User {
-  id                 String     @id @default(uuid())
-  email              String     @unique
+  id                 String      @id @default(uuid())
+  email              String      @unique
   name               String?
   descriptionProfile String?
   blogProfile        String?
@@ -19,12 +19,13 @@ model User {
   password           String
   profilePicture     String? // Caminho para a foto do perfil
   posts              Post[] // Relacionamento com as postagens
-  followers          Follower[] @relation("UserFollowers") // Relacionamento de seguidores
-  following          Follower[] @relation("UserFollowing") // Relacionamento de pessoas que segue
+  followers          Follower[]  @relation("UserFollowers") // Relacionamento de seguidores
+  following          Follower[]  @relation("UserFollowing") // Relacionamento de pessoas que segue
   comments           Comment[] // Relacionamento com comentários
-  createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
   likes              Like[] // Curtidas do usuário
+  UserToken          UserToken[]
 
   @@map("users")
 }
@@ -78,4 +79,15 @@ model Follower {
 
   @@unique([followerId, followedId]) // Garantir que um usuário possa seguir outro apenas uma vez
   @@map("followers")
+}
+
+model UserToken {
+  id        String   @id @default(uuid())
+  token     String   @unique @default(uuid())
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_tokens")
 }
