@@ -20,7 +20,7 @@ class SendForgotPasswordService {
                 userId: userExists.id,
             },
         });
-        const forgotPasswordTemplate = path_1.default.resolve(__dirname, '../..', 'views', 'forgot_password.hbs');
+        const forgotPasswordTemplate = path_1.default.resolve(__dirname, process.env.NODE_ENV === "production" ? ".." : "../..", "views", "forgot_password.hbs");
         const { url: urlValue } = await EtherealMail_1.default.sendMail({
             to: {
                 name: userExists.name,
@@ -31,7 +31,7 @@ class SendForgotPasswordService {
                 file: forgotPasswordTemplate,
                 variables: {
                     name: userExists.name,
-                    link: `http://localhost:3000/reset_password`,
+                    link: `http://localhost:3000/reset_password?token=${userToken.token}`,
                 },
             },
         });
