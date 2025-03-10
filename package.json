@@ -4,10 +4,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
-    "build": "tsc --build",
-    "start": "node dist/server.js",
-    "vercel-build": "prisma generate && prisma migrate deploy",
-    "prisma:generate": "prisma generate"
+    "build": "tsc --build && npm run copy-views",
+    "copy-views": "xcopy /E /I src\\views\\ dist\\views\\",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
