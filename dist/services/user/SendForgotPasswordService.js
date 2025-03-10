@@ -21,6 +21,7 @@ class SendForgotPasswordService {
             },
         });
         const forgotPasswordTemplate = path_1.default.resolve(__dirname, process.env.NODE_ENV === "production" ? ".." : "../..", "views", "forgot_password.hbs");
+        const link = process.env.NODE_ENV === "production" ? "https://devblog-frontend.vercel.app" : "http://localhost:3000";
         const { url: urlValue } = await EtherealMail_1.default.sendMail({
             to: {
                 name: userExists.name,
@@ -31,7 +32,7 @@ class SendForgotPasswordService {
                 file: forgotPasswordTemplate,
                 variables: {
                     name: userExists.name,
-                    link: `http://localhost:3000/reset_password?token=${userToken.token}`,
+                    link: `${link}/reset_password?token=${userToken.token}`,
                 },
             },
         });
