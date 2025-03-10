@@ -18,12 +18,14 @@ async execute({ title, description, post_id }: PostRequest){
      throw new Error("Post not found.");
     }
   
-    // Verificar se o título ou descrição foram alterados
+    // Verifica se o título ou descrição foram alterados
     if (
       postExists.title === title &&
       postExists.description === description
     ) {
-      throw new Error("Nenhum campo foi alterado.");
+        return {
+          message: "Nenhum campo foi alterado.",  
+        };
     }
 
     const updatePost = await prismaClient.post.update({
