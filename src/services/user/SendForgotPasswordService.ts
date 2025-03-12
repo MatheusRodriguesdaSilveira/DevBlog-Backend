@@ -1,13 +1,13 @@
 import EtherealMail from "../../config/mail/EtherealMail";
 import { prismaClient } from "../../prisma";
-import path from 'path';
+import path from "path";
 
 interface IRequest {
   email: string;
 }
 
 class SendForgotPasswordService {
-  public async execute({ email }: IRequest): Promise<{ url: string}> {
+  public async execute({ email }: IRequest): Promise<{ url: string }> {
     const userExists = await prismaClient.user.findUnique({
       where: { email },
     });
@@ -21,14 +21,15 @@ class SendForgotPasswordService {
         userId: userExists.id,
       },
     });
-    const forgotPasswordTemplate = path.resolve(
-      __dirname,
-      process.env.NODE_ENV === "production" ? ".." : "../..",
-      "views",
-      "forgot_password.hbs"
+
+    const forgotPasswordTemplate = path.join(
+      process.cwd(), "dist", "views", "forgot_password.hbs"
     );
     
-    const link = process.env.NODE_ENV === "production" ? "https://devblog-frontend.vercel.app" : "http://localhost:3000"
+    const link =
+      process.env.NODE_ENV === "production"
+        ? "https://devblog-frontend.vercel.app"
+        : "http://localhost:3000";
 
     const { url: urlValue } = await EtherealMail.sendMail({
       to: {
@@ -46,8 +47,8 @@ class SendForgotPasswordService {
     });
 
     return {
-      url: urlValue
-    }
+      url: urlValue,
+    };
   }
 }
 
