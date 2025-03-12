@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/server.ts",
-    "build": "prisma generate && tsc --build && npm run copy-views",
+    "postinstall": "prisma generate",
+    "build": "npm run prisma-generate && tsc --build && npm run copy-views",
+    "prisma-generate": "prisma generate",
     "copy-views": "xcopy /E /I /Y src\\views\\ dist\\views\\",
     "start": "node dist/server.js"
   },
@@ -13,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@prisma/client": "^6.5.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/express-fileupload": "^1.5.1",
     "@types/jsonwebtoken": "^9.0.7",
@@ -23,7 +25,6 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.5.0",
     "@types/express": "^5.0.0",
     "add": "^2.0.6",
     "bcrypt": "^5.1.1",
