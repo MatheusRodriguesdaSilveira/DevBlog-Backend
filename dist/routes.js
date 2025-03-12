@@ -17,28 +17,30 @@ const LikePostController_1 = require("./controllers/like/LikePostController");
 const GetUserByIdController_1 = require("./controllers/user/GetUserByIdController");
 const SendForgotPasswordController_1 = require("./controllers/user/SendForgotPasswordController");
 const ResetPasswordController_1 = require("./controllers/user/ResetPasswordController");
+const DeleteUserController_1 = require("./controllers/user/DeleteUserController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // Auth routes
-router.post('/users', new CreateUserController_1.CreateUserController().handle);
-router.post('/login', new AuthUserController_1.AuthUserController().handle);
+router.post("/users", new CreateUserController_1.CreateUserController().handle);
+router.post("/login", new AuthUserController_1.AuthUserController().handle);
 // Password routes
-router.post('/forgot', new SendForgotPasswordController_1.SendForgotPasswordController().handle);
-router.post('/reset', new ResetPasswordController_1.ResetPasswordController().handle);
+router.post("/forgot", new SendForgotPasswordController_1.SendForgotPasswordController().handle);
+router.post("/reset", new ResetPasswordController_1.ResetPasswordController().handle);
 // Users routes
-router.get('/info', isAuthticated_1.isAuthenticated, new InfoUserController_1.InfoUserController().handle);
-router.get('/profiles', isAuthticated_1.isAuthenticated, new GetAllUsersController_1.UserController().handle);
-router.get('/user/:user_id', isAuthticated_1.isAuthenticated, new GetUserByIdController_1.GetUserByIdController().handle);
+router.get("/info", isAuthticated_1.isAuthenticated, new InfoUserController_1.InfoUserController().handle);
+router.get("/profiles", isAuthticated_1.isAuthenticated, new GetAllUsersController_1.UserController().handle);
+router.get("/user/:user_id", isAuthticated_1.isAuthenticated, new GetUserByIdController_1.GetUserByIdController().handle);
+router.delete("/user/:user_id", isAuthticated_1.isAuthenticated, new DeleteUserController_1.DeleteUserController().handle);
 // Posts routes
-router.put('/edit', isAuthticated_1.isAuthenticated, new EditeUserController_1.UpdateUserController().handle);
-router.post('/post', isAuthticated_1.isAuthenticated, new CreatePostController_1.CreatePostController().handle);
-router.get('/posts', isAuthticated_1.isAuthenticated, new GetAllPostController_1.GetAllPostsController().handle);
-router.delete('/post/:post_id', isAuthticated_1.isAuthenticated, new DeletePostController_1.DeletePostController().handle);
-router.put('/edit/:post_id', isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
-router.post('/comment/:post_id', isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);
+router.put("/edit", isAuthticated_1.isAuthenticated, new EditeUserController_1.UpdateUserController().handle);
+router.post("/post", isAuthticated_1.isAuthenticated, new CreatePostController_1.CreatePostController().handle);
+router.get("/posts", isAuthticated_1.isAuthenticated, new GetAllPostController_1.GetAllPostsController().handle);
+router.delete("/post/:post_id", isAuthticated_1.isAuthenticated, new DeletePostController_1.DeletePostController().handle);
+router.put("/edit/:post_id", isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
+router.post("/comment/:post_id", isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);
 // Like routes
 const likeController = new LikePostController_1.LikeController();
-router.post('/like/:post_id', isAuthticated_1.isAuthenticated, likeController.handle);
-router.get('/likes/:post_id', isAuthticated_1.isAuthenticated, likeController.getLikesByPostId);
-router.get('/likes/:user_id', isAuthticated_1.isAuthenticated, likeController.getLikesByUserId);
-router.delete('/like/:id', isAuthticated_1.isAuthenticated, likeController.deleteLike);
+router.post("/like/:post_id", isAuthticated_1.isAuthenticated, likeController.handle);
+router.get("/likes/:post_id", isAuthticated_1.isAuthenticated, likeController.getLikesByPostId);
+router.get("/likes/:user_id", isAuthticated_1.isAuthenticated, likeController.getLikesByUserId);
+router.delete("/like/:id", isAuthticated_1.isAuthenticated, likeController.deleteLike);
