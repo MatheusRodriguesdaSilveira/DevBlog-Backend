@@ -20,14 +20,16 @@ class SendForgotPasswordService {
                 userId: userExists.id,
             },
         });
-        const forgotPasswordTemplate = path_1.default.resolve(__dirname, process.env.NODE_ENV === "production" ? ".." : "../..", "views", "forgot_password.hbs");
-        const link = process.env.NODE_ENV === "production" ? "https://devblog-frontend.vercel.app" : "http://localhost:3000";
+        const forgotPasswordTemplate = path_1.default.join(process.cwd(), "dist", "views", "forgot_password.hbs");
+        const link = process.env.NODE_ENV === "production"
+            ? "https://devblog-frontend.vercel.app"
+            : "http://localhost:3000";
         const { url: urlValue } = await EtherealMail_1.default.sendMail({
             to: {
                 name: userExists.name,
                 email: userExists.email,
             },
-            subject: '[DevBlog] Recuperação de Senha',
+            subject: "[DevBlog] Recuperação de Senha",
             templateData: {
                 file: forgotPasswordTemplate,
                 variables: {
@@ -37,7 +39,7 @@ class SendForgotPasswordService {
             },
         });
         return {
-            url: urlValue
+            url: urlValue,
         };
     }
 }
