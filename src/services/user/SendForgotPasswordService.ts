@@ -28,7 +28,7 @@ class SendForgotPasswordService {
     
     const link =
       process.env.NODE_ENV === "production"
-        ? "https://devblog-frontend.vercel.app"
+        ? "https://dev-blog-frontend-umber.vercel.app"
         : "http://localhost:3000";
 
     const { url: urlValue } = await EtherealMail.sendMail({
