@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev src/server.ts",
     "postinstall": "npx prisma generate",
     "build": "prisma generate && tsc --build && npm run copy-views",
     "copy-views": "xcopy /E /I /Y src\\views\\ dist\\views\\",
