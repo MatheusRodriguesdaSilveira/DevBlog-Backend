@@ -21,20 +21,18 @@ class SendForgotPasswordService {
             },
         });
         const forgotPasswordTemplate = path_1.default.join(process.cwd(), "dist", "views", "forgot_password.hbs");
-        const link = process.env.NODE_ENV === "production"
-            ? "https://dev-blog-frontend-umber.vercel.app/reset_password"
-            : "http://localhost:3000";
+        const linkUrl = process.env.BASE;
         const { url: urlValue } = await EtherealMail_1.default.sendMail({
             to: {
                 name: userExists.name,
                 email: userExists.email,
             },
-            subject: '[DevBlog] Recuperação de Senha',
+            subject: "[DevBlog] Recuperação de Senha",
             templateData: {
                 file: forgotPasswordTemplate,
                 variables: {
                     name: userExists.name,
-                    link: `https://dev-blog-frontend-umber.vercel.app/reset_password?token=${userToken.token}`,
+                    link: `${linkUrl}/reset_password?token=${userToken.token}`,
                 },
             },
         });
