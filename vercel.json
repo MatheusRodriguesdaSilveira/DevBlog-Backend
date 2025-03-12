@@ -2,10 +2,10 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/next",
+      "src": "dist/server.js",
+      "use": "@vercel/node",
       "config": {
-        "installCommand": "npm install && prisma generate"
+        "includeFiles": ["dist/**"]
       }
     }
   ],
