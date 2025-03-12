@@ -21,4 +21,4 @@ Esta é uma API backend construída com **Node.js**, **ExpressJS**, **TypeScript
 
 A estrutura do projeto está organizada da seguinte maneira:
 
-![image](https://github.com/user-attachments/assets/5df95085-24d9-488c-8cad-790c7963ede7)
+![image](https://github.com/user-attachments/assets/dfbedc97-64b1-4402-9926-68532f9da550)
