@@ -37,7 +37,6 @@ class LikeService {
                     createdAt: true,
                 },
             });
-            console.log("Novo like criado:", newLike);
             return {
                 message: "Like adicionado",
                 id: newLike.id,
@@ -63,10 +62,10 @@ class LikeService {
                     select: {
                         id: true,
                         name: true,
-                    }
+                    },
                 },
-                createdAt: true
-            }
+                createdAt: true,
+            },
         });
         return likes;
     }
@@ -74,8 +73,8 @@ class LikeService {
         try {
             const user = await prisma_1.prismaClient.user.findUnique({
                 where: {
-                    id: userId
-                }
+                    id: userId,
+                },
             });
             if (user) {
                 const likes = await prisma_1.prismaClient.like.findMany({
