@@ -11,11 +11,12 @@ import { isAuthenticated } from "./middlewares/isAuthticated";
 import { DeletePostController } from "./controllers/post/DeletePostController";
 import { EditPostController } from "./controllers/post/EditPostController";
 import { CommentPostController } from "./controllers/post/CommentPostController";
-import { LikeController } from "./controllers/like/LikePostController";
+import { LikeController } from "./controllers/like/LikeController";
 import { GetUserByIdController } from "./controllers/user/GetUserByIdController";
 import { SendForgotPasswordController } from "./controllers/user/SendForgotPasswordController";
 import { ResetPasswordController } from "./controllers/user/ResetPasswordController";
 import { DeleteUserController } from "./controllers/user/DeleteUserController";
+import { FollowerController } from "./controllers/follower/FollowerController";
 
 const router = Router();
 
@@ -81,5 +82,13 @@ router.get(
   likeController.getLikesByUserId as any
 );
 router.delete("/like/:id", isAuthenticated, likeController.deleteLike as any);
+
+const followController = new FollowerController();
+router.post("/follow", isAuthenticated, followController.handle as any);
+router.delete(
+  "/unfollow",
+  isAuthenticated,
+  followController.deleteFollow as any
+);
 
 export { router };
