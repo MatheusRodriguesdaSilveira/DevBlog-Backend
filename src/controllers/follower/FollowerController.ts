@@ -16,6 +16,15 @@ class FollowerController {
     }
   }
 
+  async getUsersNotFollowed(req: Request, res: Response) {
+    const loggedUserId = req.user_id;
+    const followerService = new FollowerService();
+    const usersNotFollowed = await followerService.getUsersNotFollowed(
+      loggedUserId
+    );
+    return res.json(usersNotFollowed);
+  }
+
   async deleteFollow(req: Request, res: Response) {
     const { followerId, followedId } = req.body;
     try {
