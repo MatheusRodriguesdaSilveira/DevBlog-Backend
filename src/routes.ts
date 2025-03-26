@@ -83,12 +83,15 @@ router.get(
 );
 router.delete("/like/:id", isAuthenticated, likeController.deleteLike as any);
 
+// Follow routes
 const followController = new FollowerController();
+
 router.post("/follow", isAuthenticated, followController.handle as any);
-router.delete(
-  "/unfollow",
+
+router.get(
+  "/following",
   isAuthenticated,
-  followController.deleteFollow as any
+  followController.getUsersNotFollowed as any
 );
 
 export { router };
