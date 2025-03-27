@@ -17,6 +17,7 @@ import { SendForgotPasswordController } from "./controllers/user/SendForgotPassw
 import { ResetPasswordController } from "./controllers/user/ResetPasswordController";
 import { DeleteUserController } from "./controllers/user/DeleteUserController";
 import { FollowerController } from "./controllers/follower/FollowerController";
+import { GetUnfollowedUsersController } from "./controllers/follower/GetUnfollowedUserService";
 
 const router = Router();
 
@@ -89,9 +90,15 @@ const followController = new FollowerController();
 router.post("/follow", isAuthenticated, followController.handle as any);
 
 router.get(
-  "/following",
+  "/following/:userId",
   isAuthenticated,
-  followController.getUsersNotFollowed as any
+  new GetUnfollowedUsersController().handle as any
+);
+
+router.delete(
+  "/unfollow",
+  isAuthenticated,
+  followController.deleteFollow as any
 );
 
 export { router };
