@@ -82,35 +82,6 @@ class FollowerService {
     }
   }
 
-  async getUsersNotFollowed(loggedUserId: string) {
-    const followers = await prismaClient.follower.findMany({
-      where: {
-        followerId: loggedUserId,
-      },
-      select: {
-        followedId: true,
-      },
-    });
-
-    const usersNotFollowed = await prismaClient.user.findMany({
-      where: {
-        id: {
-          notIn: followers.map((follower) => follower.followedId),
-          not: loggedUserId,
-        },
-      },
-      select: {
-        id: true,
-        email: true,
-      },
-    });
-
-    return {
-      message: "Usuários não seguidos",
-      users: usersNotFollowed,
-    };
-  }
-
   async deleteFollow(followerId: string, followedId: string) {
     await prismaClient.follower.delete({
       where: {
