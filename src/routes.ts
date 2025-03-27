@@ -17,7 +17,7 @@ import { SendForgotPasswordController } from "./controllers/user/SendForgotPassw
 import { ResetPasswordController } from "./controllers/user/ResetPasswordController";
 import { DeleteUserController } from "./controllers/user/DeleteUserController";
 import { FollowerController } from "./controllers/follower/FollowerController";
-import { GetUnfollowedUsersController } from "./controllers/follower/GetUnfollowedUserService";
+import { GetUnfollowedUsersController } from "./controllers/follower/GetUnfollowedUserController";
 
 const router = Router();
 
