@@ -17,6 +17,7 @@ import { SendForgotPasswordController } from "./controllers/user/SendForgotPassw
 import { ResetPasswordController } from "./controllers/user/ResetPasswordController";
 import { DeleteUserController } from "./controllers/user/DeleteUserController";
 import { FollowerController } from "./controllers/follower/FollowerController";
+import { GetUnfollowedUsersController } from "./controllers/follower/GetUnfollowedUserController";
 
 const router = Router();
 
@@ -83,8 +84,17 @@ router.get(
 );
 router.delete("/like/:id", isAuthenticated, likeController.deleteLike as any);
 
+// Follow routes
 const followController = new FollowerController();
+
 router.post("/follow", isAuthenticated, followController.handle as any);
+
+router.get(
+  "/following/:userId",
+  isAuthenticated,
+  new GetUnfollowedUsersController().handle as any
+);
+
 router.delete(
   "/unfollow",
   isAuthenticated,

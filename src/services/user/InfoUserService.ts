@@ -15,7 +15,11 @@ class InfoUserService {
         linkedinProfile: true,
         profilePicture: true,
         followers: true,
-        following: true,
+        following: {
+          select: {
+            followerId: true,
+          },
+        },
         posts: {
           select: {
             id: true,

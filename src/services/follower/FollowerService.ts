@@ -7,6 +7,18 @@ class FollowerService {
     }
 
     try {
+      const user = await prismaClient.user.findUnique({
+        where: {
+          id: followerId,
+        },
+      });
+
+      const userFollowed = await prismaClient.user.findUnique({
+        where: {
+          id: followedId,
+        },
+      });
+
       const existingFollow = await prismaClient.follower.findFirst({
         where: {
           followerId,
@@ -22,7 +34,7 @@ class FollowerService {
           },
         });
         return {
-          message: `Follow removido: ${followerId} deixou de seguir ${followedId}`,
+          message: `Follow removido: ${followedId}: ${userFollowed?.email} deixou de seguir ${followerId}: ${user?.email}`,
           id: existingFollow.id,
         };
       } else {
@@ -34,7 +46,7 @@ class FollowerService {
           },
         });
         return {
-          message: `Follow adicionado: ${followerId} segue ${followedId}`,
+          message: `Follow adicionado: ${followerId}: ${user?.email} foi seguido por ${followedId}: ${userFollowed?.email}`,
           id: newFollow.id,
         };
       }
@@ -44,25 +56,25 @@ class FollowerService {
     }
   }
 
-  async getFollowsByUser(userId: string) {
+  async getFollowersByUser(userId: string) {
     try {
+      if (!userId) {
+        throw new Error("userId é obrigatório");
+      }
       const user = await prismaClient.user.findUnique({
         where: {
           id: userId,
         },
       });
       if (user) {
-        const follows = await prismaClient.follower.findMany({
+        const followers = await prismaClient.follower.findMany({
           where: {
-            followerId: userId,
-          },
-          include: {
-            followed: true,
+            followedId: userId,
           },
         });
-        return follows;
+        return followers;
       } else {
-        throw new Error("User not found");
+        throw new Error(`User not found with ID ${userId}`);
       }
     } catch (error) {
       console.error(error);

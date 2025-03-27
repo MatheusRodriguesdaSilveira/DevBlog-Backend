@@ -5,8 +5,8 @@ class GetAllUsersService {
     const users = await prismaClient.user.findMany({
       where: {
         id: {
-          not: loggedUserId
-        }
+          not: loggedUserId,
+        },
       },
       select: {
         id: true,
@@ -15,8 +15,13 @@ class GetAllUsersService {
         descriptionProfile: true,
         blogProfile: true,
         linkedinProfile: true,
-        profilePicture: true
-      }
+        profilePicture: true,
+        followers: {
+          select: {
+            followedId: true,
+          },
+        },
+      },
     });
 
     return users;
