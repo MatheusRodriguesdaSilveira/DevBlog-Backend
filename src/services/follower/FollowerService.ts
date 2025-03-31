@@ -1,4 +1,5 @@
 import { prismaClient } from "../../prisma";
+import { v4 as uuidv4 } from "uuid";
 
 class FollowerService {
   async execute(followerId: string, followedId: string) {
@@ -41,8 +42,8 @@ class FollowerService {
         // Criar novo follow
         const newFollow = await prismaClient.follower.create({
           data: {
-            followerId: followerId.toString(),
-            followedId: followedId.toString(),
+            followerId: followerId ? followerId.toString() : uuidv4(),
+            followedId: followedId ? followedId.toString() : uuidv4(),
           },
         });
 

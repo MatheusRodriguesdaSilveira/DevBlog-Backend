@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FollowerService = void 0;
 const prisma_1 = require("../../prisma");
+const uuid_1 = require("uuid");
 class FollowerService {
     async execute(followerId, followedId) {
         if (followerId === followedId) {
@@ -40,8 +41,8 @@ class FollowerService {
                 // Criar novo follow
                 const newFollow = await prisma_1.prismaClient.follower.create({
                     data: {
-                        followerId: followerId.toString(),
-                        followedId: followedId.toString(),
+                        followerId: followerId ? followerId.toString() : (0, uuid_1.v4)(),
+                        followedId: followedId ? followedId.toString() : (0, uuid_1.v4)(),
                     },
                 });
                 return {
