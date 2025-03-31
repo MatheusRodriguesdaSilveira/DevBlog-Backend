@@ -2,27 +2,22 @@ import { prismaClient } from "../../prisma";
 
 class GetUnfollowedUsersService {
   async execute(loggedUserId: string) {
+    // Buscar IDs dos usuários seguidos pelo logado
     const followingUsers = await prismaClient.follower.findMany({
-      where: { followerId: loggedUserId },
-      select: { followedId: true },
-    });
-
-    const followersUsers = await prismaClient.follower.findMany({
+      // Pessoa logada = o seguidor
       where: { followedId: loggedUserId },
+      // Retorna os IDs dos usuarios seguidos = os seguidores
       select: { followerId: true },
     });
 
-    const followingIds = followingUsers.map((user) => user.followedId);
-    const followersIds = followersUsers.map((user) => user.followerId);
+    // Extrair apenas os IDs dos usuários seguidos pelo logado
+    const followingIds = followingUsers.map((user) => user.followerId);
 
-    const allFollowedIds = Array.from(
-      new Set([...followingIds, ...followersIds])
-    );
-
+    // Buscar usuários que o logado AINDA NÃO SEGUE (que ainda não foram seguidos pelo logado)
     const unfollowedUsers = await prismaClient.user.findMany({
       where: {
         id: {
-          notIn: [...allFollowedIds, loggedUserId],
+          notIn: [...followingIds, loggedUserId], // Remove apenas os seguidos e o próprio logado
         },
       },
       select: {

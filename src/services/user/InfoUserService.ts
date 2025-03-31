@@ -14,10 +14,26 @@ class InfoUserService {
         blogProfile: true,
         linkedinProfile: true,
         profilePicture: true,
-        followers: true,
+        followers: {
+          select: {
+            followed: {
+              select: {
+                id: true,
+                name: true,
+                profilePicture: true,
+              },
+            },
+          },
+        },
         following: {
           select: {
-            followerId: true,
+            follower: {
+              select: {
+                id: true,
+                name: true,
+                profilePicture: true,
+              },
+            },
           },
         },
         posts: {

@@ -6,7 +6,7 @@ class InfoUserService {
     async execute(user_id) {
         const user = await prisma_1.prismaClient.user.findFirst({
             where: {
-                id: user_id
+                id: user_id,
             },
             select: {
                 id: true,
@@ -16,6 +16,28 @@ class InfoUserService {
                 blogProfile: true,
                 linkedinProfile: true,
                 profilePicture: true,
+                followers: {
+                    select: {
+                        followed: {
+                            select: {
+                                id: true,
+                                name: true,
+                                profilePicture: true,
+                            },
+                        },
+                    },
+                },
+                following: {
+                    select: {
+                        follower: {
+                            select: {
+                                id: true,
+                                name: true,
+                                profilePicture: true,
+                            },
+                        },
+                    },
+                },
                 posts: {
                     select: {
                         id: true,
@@ -29,7 +51,7 @@ class InfoUserService {
                                     select: {
                                         name: true,
                                         profilePicture: true,
-                                    }
+                                    },
                                 },
                             },
                         },
@@ -38,10 +60,10 @@ class InfoUserService {
                         updatedAt: true,
                     },
                     orderBy: {
-                        createdAt: 'desc',
-                    }
+                        createdAt: "desc",
+                    },
                 },
-            }
+            },
         });
         return user;
     }

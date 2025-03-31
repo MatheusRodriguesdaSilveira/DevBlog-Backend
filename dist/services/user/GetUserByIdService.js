@@ -6,7 +6,7 @@ class GetUserByIdService {
     async execute(user_id) {
         const user = await prisma_1.prismaClient.user.findUnique({
             where: {
-                id: user_id
+                id: user_id,
             },
             select: {
                 name: true,
@@ -15,6 +15,8 @@ class GetUserByIdService {
                 blogProfile: true,
                 linkedinProfile: true,
                 profilePicture: true,
+                followers: true,
+                following: true,
                 posts: {
                     select: {
                         id: true,
@@ -28,13 +30,13 @@ class GetUserByIdService {
                                     select: {
                                         name: true,
                                         profilePicture: true,
-                                    }
+                                    },
                                 },
                             },
                         },
                     },
                 },
-            }
+            },
         });
         return user;
     }
