@@ -7,7 +7,7 @@ class FollowerController {
         const { followerId, followedId } = req.body;
         try {
             const followerService = new FollowerService_1.FollowerService();
-            const follow = await followerService.execute(followerId, followedId);
+            const follow = await followerService.execute({ followerId, followedId });
             return res.json(follow);
         }
         catch (error) {

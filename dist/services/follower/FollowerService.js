@@ -4,7 +4,7 @@ exports.FollowerService = void 0;
 const prisma_1 = require("../../prisma");
 const uuid_1 = require("uuid");
 class FollowerService {
-    async execute(followerId, followedId) {
+    async execute({ followerId, followedId }) {
         if (followerId === followedId) {
             throw new Error("O seguidor e o seguido não podem ser iguais.");
         }
@@ -41,8 +41,12 @@ class FollowerService {
                 // Criar novo follow
                 const newFollow = await prisma_1.prismaClient.follower.create({
                     data: {
-                        followerId: followerId ? followerId.toString() : (0, uuid_1.v4)(),
-                        followedId: followedId ? followedId.toString() : (0, uuid_1.v4)(),
+                        followerId: followerId
+                            ? followerId.toString()
+                            : (0, uuid_1.v4)(),
+                        followedId: followedId
+                            ? followedId.toString()
+                            : (0, uuid_1.v4)(),
                     },
                 });
                 return {
