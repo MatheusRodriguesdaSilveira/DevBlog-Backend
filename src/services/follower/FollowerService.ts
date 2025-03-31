@@ -41,10 +41,11 @@ class FollowerService {
         // Criar novo follow
         const newFollow = await prismaClient.follower.create({
           data: {
-            followerId,
-            followedId,
+            followerId: followerId.toString(),
+            followedId: followedId.toString(),
           },
         });
+
         return {
           message: `Follow adicionado: ${followerId}: ${user?.email} foi seguido por ${followedId}: ${userFollowed?.email}`,
           id: newFollow.id,
