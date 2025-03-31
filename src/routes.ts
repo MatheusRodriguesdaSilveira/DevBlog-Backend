@@ -90,7 +90,7 @@ const followController = new FollowerController();
 router.post("/follow", isAuthenticated, followController.handle as any);
 
 router.get(
-  "/following/:userId",
+  "/following",
   isAuthenticated,
   new GetUnfollowedUsersController().handle as any
 );
