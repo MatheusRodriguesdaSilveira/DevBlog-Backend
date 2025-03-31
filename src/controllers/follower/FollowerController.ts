@@ -6,7 +6,7 @@ class FollowerController {
     const { followerId, followedId } = req.body;
     try {
       const followerService = new FollowerService();
-      const follow = await followerService.execute(followerId, followedId);
+      const follow = await followerService.execute({ followerId, followedId });
       return res.json(follow);
     } catch (error) {
       console.error("Erro ao seguir/deixar de seguir usuário:", error);
