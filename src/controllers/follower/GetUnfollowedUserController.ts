@@ -3,7 +3,7 @@ import { GetUnfollowedUsersService } from "../../services/follower/GetUnfollowed
 
 class GetUnfollowedUsersController {
   async handle(req: Request, res: Response) {
-    const loggedUserId = req.user_id; // Pegando do middleware de autenticação
+    const loggedUserId = req.user_id;
 
     const service = new GetUnfollowedUsersService();
     const users = await service.execute(loggedUserId);
