@@ -13,11 +13,13 @@ const isAuthticated_1 = require("./middlewares/isAuthticated");
 const DeletePostController_1 = require("./controllers/post/DeletePostController");
 const EditPostController_1 = require("./controllers/post/EditPostController");
 const CommentPostController_1 = require("./controllers/post/CommentPostController");
-const LikePostController_1 = require("./controllers/like/LikePostController");
+const LikeController_1 = require("./controllers/like/LikeController");
 const GetUserByIdController_1 = require("./controllers/user/GetUserByIdController");
 const SendForgotPasswordController_1 = require("./controllers/user/SendForgotPasswordController");
 const ResetPasswordController_1 = require("./controllers/user/ResetPasswordController");
 const DeleteUserController_1 = require("./controllers/user/DeleteUserController");
+const FollowerController_1 = require("./controllers/follower/FollowerController");
+const GetUnfollowedUserController_1 = require("./controllers/follower/GetUnfollowedUserController");
 const router = (0, express_1.Router)();
 exports.router = router;
 // Auth routes
@@ -39,8 +41,13 @@ router.delete("/post/:post_id", isAuthticated_1.isAuthenticated, new DeletePostC
 router.put("/edit/:post_id", isAuthticated_1.isAuthenticated, new EditPostController_1.EditPostController().handle);
 router.post("/comment/:post_id", isAuthticated_1.isAuthenticated, new CommentPostController_1.CommentPostController().handle);
 // Like routes
-const likeController = new LikePostController_1.LikeController();
+const likeController = new LikeController_1.LikeController();
 router.post("/like/:post_id", isAuthticated_1.isAuthenticated, likeController.handle);
 router.get("/likes/:post_id", isAuthticated_1.isAuthenticated, likeController.getLikesByPostId);
 router.get("/likes/:user_id", isAuthticated_1.isAuthenticated, likeController.getLikesByUserId);
 router.delete("/like/:id", isAuthticated_1.isAuthenticated, likeController.deleteLike);
+// Follow routes
+const followController = new FollowerController_1.FollowerController();
+router.post("/follow", isAuthticated_1.isAuthenticated, followController.handle);
+router.get("/following", isAuthticated_1.isAuthenticated, new GetUnfollowedUserController_1.GetUnfollowedUsersController().handle);
+router.delete("/unfollow", isAuthticated_1.isAuthenticated, followController.deleteFollow);
