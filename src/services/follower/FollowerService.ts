@@ -8,6 +8,10 @@ interface FollowProps {
 
 class FollowerService {
   async execute({ followerId, followedId }: FollowProps) {
+    if (!followerId || !followedId) {
+      throw new Error("O seguidor e o seguido são obrigatórios.");
+    }
+
     if (followerId === followedId) {
       throw new Error("O seguidor e o seguido não podem ser iguais.");
     }
@@ -47,12 +51,8 @@ class FollowerService {
         // Criar novo follow
         const newFollow = await prismaClient.follower.create({
           data: {
-            followerId: (followerId as unknown as string)
-              ? followerId.toString()
-              : uuidv4(),
-            followedId: (followedId as unknown as string)
-              ? followedId.toString()
-              : uuidv4(),
+            followerId: followerId,
+            followedId: followedId,
           },
         });
 

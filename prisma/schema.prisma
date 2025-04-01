@@ -68,9 +68,9 @@ model Comment {
 }
 
 model Follower {
-  id         String   @id @default(uuid()) @db.Uuid
-  followerId String   @db.Uuid // Adicionando @db.Uuid
-  followedId String   @db.Uuid // Adicionando @db.Uuid
+  id         Int      @id @default(autoincrement())
+  followerId String // Chave estrangeira do usuário que está seguindo
+  followedId String // Chave estrangeira do usuário que está sendo seguido
   follower   User     @relation("UserFollowers", fields: [followerId], references: [id])
   followed   User     @relation("UserFollowing", fields: [followedId], references: [id])
   createdAt  DateTime @default(now())
