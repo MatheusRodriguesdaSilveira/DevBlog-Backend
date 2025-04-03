@@ -24,6 +24,7 @@ class GetUnfollowedUsersService {
                 id: true,
                 name: true,
                 profilePicture: true,
+                descriptionProfile: true,
             },
         });
         return unfollowedUsers;

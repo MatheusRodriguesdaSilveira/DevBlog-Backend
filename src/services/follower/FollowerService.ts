@@ -1,5 +1,4 @@
 import { prismaClient } from "../../prisma";
-import { v4 as uuidv4 } from "uuid";
 
 interface FollowProps {
   followerId: string;
@@ -94,13 +93,69 @@ class FollowerService {
   }
 
   async deleteFollow(followerId: string, followedId: string) {
+    const existingFollow = await prismaClient.follower.findFirst({
+      where: { followerId, followedId },
+    });
+
+    if (!existingFollow) {
+      throw new Error("Follow relationship does not exist.");
+    }
+
     await prismaClient.follower.delete({
+      where: { id: existingFollow.id },
+    });
+
+    return { message: "Unfollow successful" };
+  }
+
+  async searchFollowedUsers(search: string, userId: string) {
+    const userLogged = await prismaClient.follower.findMany({
+      where: { followedId: userId },
+    });
+
+    const followedUsers = await prismaClient.user.findMany({
       where: {
-        followerId_followedId: { followerId, followedId },
+        id: {
+          in: userLogged.map((user) => user.followerId),
+        },
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        profilePicture: true,
       },
     });
 
-    return { message: "Follow removido" };
+    return followedUsers;
+  }
+
+  async searchFollowersUsers(search: string, userId: string) {
+    const userLogged = await prismaClient.follower.findMany({
+      where: { followerId: userId },
+    });
+
+    const followersUsers = await prismaClient.user.findMany({
+      where: {
+        id: {
+          in: userLogged.map((user) => user.followedId),
+        },
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        profilePicture: true,
+      },
+    });
+
+    return followersUsers;
   }
 }
 

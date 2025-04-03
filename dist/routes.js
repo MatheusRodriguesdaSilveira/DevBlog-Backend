@@ -51,3 +51,5 @@ const followController = new FollowerController_1.FollowerController();
 router.post("/follow", isAuthticated_1.isAuthenticated, followController.handle);
 router.get("/following", isAuthticated_1.isAuthenticated, new GetUnfollowedUserController_1.GetUnfollowedUsersController().handle);
 router.delete("/unfollow", isAuthticated_1.isAuthenticated, followController.deleteFollow);
+router.get("/followed-users", isAuthticated_1.isAuthenticated, followController.searchFollowedUsers);
+router.get("/followers-users", isAuthticated_1.isAuthenticated, followController.searchFollowersUsers);

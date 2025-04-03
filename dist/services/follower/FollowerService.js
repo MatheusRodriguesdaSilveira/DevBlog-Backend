@@ -86,12 +86,60 @@ class FollowerService {
         }
     }
     async deleteFollow(followerId, followedId) {
+        const existingFollow = await prisma_1.prismaClient.follower.findFirst({
+            where: { followerId, followedId },
+        });
+        if (!existingFollow) {
+            throw new Error("Follow relationship does not exist.");
+        }
         await prisma_1.prismaClient.follower.delete({
+            where: { id: existingFollow.id },
+        });
+        return { message: "Unfollow successful" };
+    }
+    async searchFollowedUsers(search, userId) {
+        const userLogged = await prisma_1.prismaClient.follower.findMany({
+            where: { followedId: userId },
+        });
+        const followedUsers = await prisma_1.prismaClient.user.findMany({
             where: {
-                followerId_followedId: { followerId, followedId },
+                id: {
+                    in: userLogged.map((user) => user.followerId),
+                },
+                name: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                profilePicture: true,
             },
         });
-        return { message: "Follow removido" };
+        return followedUsers;
+    }
+    async searchFollowersUsers(search, userId) {
+        const userLogged = await prisma_1.prismaClient.follower.findMany({
+            where: { followerId: userId },
+        });
+        const followersUsers = await prisma_1.prismaClient.user.findMany({
+            where: {
+                id: {
+                    in: userLogged.map((user) => user.followedId),
+                },
+                name: {
+                    contains: search,
+                    mode: "insensitive",
+                },
+            },
+            select: {
+                id: true,
+                name: true,
+                profilePicture: true,
+            },
+        });
+        return followersUsers;
     }
 }
 exports.FollowerService = FollowerService;
