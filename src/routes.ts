@@ -101,4 +101,16 @@ router.delete(
   followController.deleteFollow as any
 );
 
+router.get(
+  "/followed-users",
+  isAuthenticated,
+  followController.searchFollowedUsers as any
+);
+
+router.get(
+  "/followers-users",
+  isAuthenticated,
+  followController.searchFollowersUsers as any
+);
+
 export { router };
