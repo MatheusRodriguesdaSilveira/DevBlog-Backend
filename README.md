@@ -1,24 +1,111 @@
-# API DevBlog-Backend - Matheus Rodrigues
+## 📦 DevBlog - Backend
 
-Esta é uma API backend construída com **Node.js**, **ExpressJS**, **TypeScript**, **Prisma**, **PostgreSQL**, e outras tecnologias. Ela foi desenvolvida para oferecer uma estrutura robusta e escalável para aplicações modernas.
+> API desenvolvida com Node.js, Express, TypeScript e Prisma, responsável por gerenciar os dados de postagens, categorias e usuários do blog.
 
-## Tecnologias Usadas
+### 🚀 Tecnologias utilizadas
 
-- **Node.js**: Ambiente de execução JavaScript para o backend.
-- **ExpressJS**: Framework web para Node.js, utilizado para construir APIs RESTful.
-- **TypeScript**: Superset do JavaScript que adiciona tipagem estática, tornando o código mais seguro e legível.
-- **Prisma**: ORM (Object-Relational Mapper) para TypeScript e JavaScript, facilitando a interação com bancos de dados relacionais.
-- **PostgreSQL**: Banco de dados relacional utilizado para armazenar os dados da aplicação.
+- Node.js
+- TypeScript
+- Express
+- Prisma ORM
+- PostgreSQL
+- Zod
+- JWT para autenticação
+- CORS
+- Dotenv
 
-## Funcionalidades
+### 📁 Estrutura do projeto
 
-- **CRUD de Usuários**: Funcionalidade para criar, ler, atualizar e excluir usuários no banco de dados PostgreSQL.
-- **CRUD de Post**: Funcionalidade para criar, ler, atualizar, comentar e excluir postagens no banco de dados PostgreSQL.
-- **CRUD de Like**: Funcionalidade para criar, ler, atualizar e excluir likes do usuário no banco de dados PostgreSQL.
-- **Autenticação JWT**: Sistema de autenticação com JSON Web Tokens para proteção de rotas.
+```
+src/
+├── controllers/
+├── routes/
+├── middlewares/
+├── services/
+├── schemas/
+├── prisma/
+├── config/
+├── utils/
+└── index.ts
+```
 
-## Estrutura do Projeto
+### 📌 Funcionalidades
 
-A estrutura do projeto está organizada da seguinte maneira:
+- CRUD completo de postagens
+- Sistema de login e autenticação JWT
+- Criação e listagem de categorias
+- Criação e gerenciamento de usuários
+- Validações com Zod
 
-![image](https://github.com/user-attachments/assets/dfbedc97-64b1-4402-9926-68532f9da550)
+### ▶️ Como executar o projeto
+
+```bash
+git clone https://github.com/MatheusRodriguesdaSilveira/DevBlog-Backend.git
+cd DevBlog-Backend
+npm install
+```
+
+Crie um arquivo `.env` com as variáveis de ambiente:
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/devblog
+JWT_SECRET=seusegredo
+```
+
+Execute as migrations do banco de dados:
+
+```bash
+npx prisma migrate dev
+```
+
+Inicie o servidor em modo de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 DevBlog - Frontend
+
+> Interface do blog desenvolvida com React, Vite e TailwindCSS. Permite aos usuários visualizar postagens, categorias e interagir com o conteúdo de forma rápida e responsiva.
+
+### 🚀 Tecnologias utilizadas
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router DOM
+- Zod + React Hook Form
+- Context API
+
+### 📌 Funcionalidades
+
+- Listagem de posts por categoria
+- Página individual de cada post
+- Sistema de login
+- Área administrativa para criar e deletar postagens
+- Responsividade para mobile e desktop
+
+### ▶️ Como executar o projeto
+
+```bash
+git clone https://github.com/MatheusRodriguesdaSilveira/DevBlog-Frontend.git
+cd DevBlog-Frontend
+npm install
+```
+
+Crie um arquivo `.env` com a URL da API:
+
+```env
+VITE_API_URL=http://localhost:3333
+```
+
+Execute o projeto em modo de desenvolvimento:
+
+```bash
+npm run dev
+```
+
