@@ -1,111 +1,107 @@
-## 📦 DevBlog - Backend
+<h1 align="center">📂 DevBlog - Backend</h1>
 
-> API desenvolvida com Node.js, Express, TypeScript e Prisma, responsável por gerenciar os dados de postagens, categorias e usuários do blog.
+<p align="center">
+  API RESTful desenvolvida para o projeto DevBlog, com gerenciamento de posts, usuários, curtidas, comentários, seguidores/seguindo e autenticação segura.<br />
+  <br />
+  <a href="https://github.com/MatheusRodriguesdaSilveira/DevBlog-Backend/issues">Reportar Bug</a>
+  ·
+  <a href="https://github.com/MatheusRodriguesdaSilveira/DevBlog-Backend/pulls">Solicitar Feature</a>
+</p>
 
-### 🚀 Tecnologias utilizadas
+---
 
-- Node.js
-- TypeScript
-- Express
-- Prisma ORM
+## 🚀 Tecnologias Utilizadas
+
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=nodejs,ts,express,postgres,prisma,git,vscode" />
+</div>
+
+- **Node.js** + **TypeScript**
+- Express.js
 - PostgreSQL
-- Zod
-- JWT para autenticação
-- CORS
-- Dotenv
+- Prisma ORM
+- JWT Auth
 
-### 📁 Estrutura do projeto
+---
+
+## ⚙️ Funcionalidades
+
+- 📝 CRUD de users
+- 📝 CRUD de posts
+- 📝 CRUD de comentários
+- 📝 CRUD de likes
+- 📝 CRUD de follows
+- 👤 Autenticação de usuários
+- 🔐 Roteamento com proteção por token JWT
+- 📁 Upload de imagens
+- 🔎 Filtro de posts por autor ou data
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```
-src/
-├── controllers/
-├── routes/
-├── middlewares/
-├── services/
-├── schemas/
-├── prisma/
-├── config/
-├── utils/
-└── index.ts
+backend/
+├─ dist/
+├─ prisma/
+├─ src/
+│  ├─ @types/
+│  ├─ config/
+│  ├─ controllers/
+│  │  ├─ follower/
+│  │  ├─ like/
+│  │  ├─ post/
+│  │  └─ user/
+│  ├─ middlewares/
+│  ├─ prisma/
+│  ├─ services/
+│  │  ├─ follower/
+│  │  ├─ like/
+│  │  ├─ post/
+│  │  └─ user/
+│  ├─ utils/
+│  ├─ views/
+│  ├─ routes.ts
+│  └─ server.ts
+├─ .env
+├─ .gitignore
+├─ copia.env
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ tsconfig.json
+└─ vercel.json
 ```
 
-### 📌 Funcionalidades
+---
 
-- CRUD completo de postagens
-- Sistema de login e autenticação JWT
-- Criação e listagem de categorias
-- Criação e gerenciamento de usuários
-- Validações com Zod
-
-### ▶️ Como executar o projeto
+## 🛠️ Como usar
 
 ```bash
-git clone https://github.com/MatheusRodriguesdaSilveira/DevBlog-Backend.git
-cd DevBlog-Backend
+# Clone o repositório
+git clone https://github.com/MatheusRodriguesdaSilveira/DevBlog-Backend
+
+# Instale as dependências
 npm install
-```
 
-Crie um arquivo `.env` com as variáveis de ambiente:
+# Configure o banco de dados em .env
 
-```env
-DATABASE_URL=postgresql://user:password@localhost:5432/devblog
-JWT_SECRET=seusegredo
-```
-
-Execute as migrations do banco de dados:
-
-```bash
+# Execute as migrations
 npx prisma migrate dev
-```
 
-Inicie o servidor em modo de desenvolvimento:
-
-```bash
+# Inicie o servidor
 npm run dev
 ```
 
 ---
 
-## 🌐 DevBlog - Frontend
+## 📬 Contato
 
-> Interface do blog desenvolvida com React, Vite e TailwindCSS. Permite aos usuários visualizar postagens, categorias e interagir com o conteúdo de forma rápida e responsiva.
+[![LinkedIn](https://img.shields.io/badge/-Matheus%20Rodrigues-0A66C2?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/matheus-rodrigues-da-silveira/)
+[![Portfólio](https://img.shields.io/badge/-Portfólio-000?style=flat&logo=ko-fi&logoColor=white)](https://portfolio-matheussilveira.vercel.app)
 
-### 🚀 Tecnologias utilizadas
+---
 
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- Axios
-- React Router DOM
-- Zod + React Hook Form
-- Context API
-
-### 📌 Funcionalidades
-
-- Listagem de posts por categoria
-- Página individual de cada post
-- Sistema de login
-- Área administrativa para criar e deletar postagens
-- Responsividade para mobile e desktop
-
-### ▶️ Como executar o projeto
-
-```bash
-git clone https://github.com/MatheusRodriguesdaSilveira/DevBlog-Frontend.git
-cd DevBlog-Frontend
-npm install
-```
-
-Crie um arquivo `.env` com a URL da API:
-
-```env
-VITE_API_URL=http://localhost:3333
-```
-
-Execute o projeto em modo de desenvolvimento:
-
-```bash
-npm run dev
-```
-
+<p align="center">
+  Feito com 💙 por Matheus Rodrigues
+</p>
